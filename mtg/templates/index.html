@@ -21,7 +21,6 @@ function() {
             url: "/getCard/",
 			data: { pyCardName: $("#cardName").val()},
             contentType: "application/json; charset=utf-8",
-			//passes the values of name and password in the login form
 			success:
 			function(cardInfo)
 			{
@@ -43,12 +42,42 @@ function() {
 				)
 </script>
 
+<script type=text/javascript>
+$(function()
+{
+$("#getRandom").click(
+function() {
+		  $.ajax({
+            url: "/getRandom/",
+            contentType: "application/json; charset=utf-8",
+			success:
+			function(cardInfo)
+			{
+				document.getElementById("tblName").innerHTML = cardInfo.name;
+				document.getElementById("tblFlavor").innerHTML = cardInfo.flavor;
+				document.getElementById("cardPic").src = cardInfo.graphic;
+				document.getElementById("tblIllustrator").innerHTML = cardInfo.illustrator;
+				document.getElementById("tblPower").innerHTML = cardInfo.power;
+				document.getElementById("tblType").innerHTML = cardInfo.type;
+				document.getElementById("tblCost").innerHTML = cardInfo.cost;
+				document.getElementById("tblAbilities").innerHTML = cardInfo.abilities;
+			}
+				});//end Ajax
+				
+				}//end function
+				);
+				}
+				)
+</script>
+
+
 <body>
 <p>Enter a card name</p>
 <input type="text" id="cardName"></input>
 <br />
     <button type='button' id='getCard' name='getCard'>Get Card</button>
-	
+	<br/>
+	 <button type='button' id='getRandom' name='getRandom'>Get Random Card</button>
 	
 <table style="border:10px solid #000000; padding:10px 30px; width: 400px; border-radius:25px">
 <tr>
