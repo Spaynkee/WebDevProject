@@ -1,15 +1,94 @@
 <!doctype html>
 <html lang="en">
-<head>
+<head> 
+		
+<script type=text/javascript src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <meta charset="utf-8">
-  <title>Some sort of title?</title>
+  <title>Sort some title of?</title>
   <meta name="description" content="What is this?">
   <meta name="author" content="Who?">
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 </head>
+
+<script type=text/javascript>
+$(function()
+{
+$("#getCard").click(
+function() {
+		  $.ajax({
+            url: "/getCard/",
+			data: { pyCardName: $("#cardName").val()},
+            contentType: "application/json; charset=utf-8",
+			//passes the values of name and password in the login form
+			success:
+			function(cardInfo)
+			{
+				document.getElementById("tblName").innerHTML = cardInfo.name;
+				document.getElementById("tblFlavor").innerHTML = cardInfo.flavor;
+				document.getElementById("cardPic").src = cardInfo.graphic;
+				document.getElementById("tblIllustrator").innerHTML = cardInfo.illustrator;
+				document.getElementById("tblPower").innerHTML = cardInfo.power;
+				document.getElementById("tblType").innerHTML = cardInfo.type;
+				document.getElementById("tblCost").innerHTML = cardInfo.cost;
+				alert(cardInfo.abilities);
+				document.getElementById("tblAbilities").innerHTML = cardInfo.abilities;
+			}
+				});//end Ajax
+				
+				}//end function
+				);
+				}
+				)
+</script>
+
 <body>
-    <p>Your server is working.</p>
+<p>Enter a card name</p>
+<input type="text" id="cardName"></input>
+<br />
+    <button type='button' id='getCard' name='getCard'>Get Card</button>
+	
+	
+<table style="border:10px solid #000000; padding:10px 30px; width: 400px; border-radius:25px">
+<tr>
+<td id="tblName">
+<p>
+</td>
+<td id="tblCost">
+</td>
+</tr>
+<tr>
+<td id="tblGraphic">
+<img src="" id="cardPic" ></img>
+</td>
+</tr>
+<tr>
+<td id="tblType">
+</td>
+</tr>
+<tr>
+<td>
+edition?
+</td>
+</tr>
+<tr>
+<td id="tblAbilities">
+</td>
+</tr>
+<tr>
+<td id="tblFlavor" style="font-style:italic">
+</td>
+</tr>
+<tr>
+<td id="tblPower">
+
+</tr>
+</td>
+<tr>
+<td id="tblIllustrator">
+</td>
+</tr>
+	
 </body>
 </html>
