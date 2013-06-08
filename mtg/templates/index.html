@@ -1,33 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head> 
-<link rel="stylesheet" href="static/css/bootstrap.css">
-<link rel="stylesheet" href="static/css/bootstrap-responsive.css">
+		
 <script type=text/javascript src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <meta charset="utf-8">
-  <title>Some title, sort of...</title>
-  <meta name="description" content="This is a page">
-  <meta name="author" content="Paul Brackett">
-  
-  <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-
-      @media (max-width: 980px) {
-        /* Enable use of floated navbar text */
-        .navbar-text.pull-right {
-          float: none;
-          padding-left: 5px;
-          padding-right: 5px;
-        }
-      }
-    </style>
-	
+  <title>Sort some title of?</title>
+  <meta name="description" content="What is this?">
+  <meta name="author" content="Who?">
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -45,25 +24,15 @@ function() {
 			success:
 			function(cardInfo)
 			{
-				if ($("#cardPic").css("opacity") > 0)
-				{
-					$("#cardPic").fadeTo(1000, 0, function()
-					{
-					$("#cardPic").attr("src", cardInfo.graphic);	
-					}
-					);
-				}
-				$('#spanName').html(cardInfo.name);				
-					$("#spanFlavor").html(cardInfo.flavor);				
-					//this line is for testing purposes
-				//	$("#cardPic").attr("src", "http://upload.wikimedia.org/wikipedia/en/e/e5/Wheel_War_MTG_Card.png");							
-					$("#spanIllustrator").html(cardInfo.illustrator);				
-					$("#spanPower").html(cardInfo.power);
-					$("#spanType").html(cardInfo.type);				
-					$("#spanCost").html(cardInfo.cost);				
-					$("#spanAbilities").html(cardInfo.abilities);
-					$("#cardPic").fadeTo(3000, 1);
-				
+				document.getElementById("tblName").innerHTML = cardInfo.name;
+				document.getElementById("tblFlavor").innerHTML = cardInfo.flavor;
+				document.getElementById("cardPic").src = cardInfo.graphic;
+				document.getElementById("tblIllustrator").innerHTML = cardInfo.illustrator;
+				document.getElementById("tblPower").innerHTML = cardInfo.power;
+				document.getElementById("tblType").innerHTML = cardInfo.type;
+				document.getElementById("tblCost").innerHTML = cardInfo.cost;
+				alert(cardInfo.abilities);
+				document.getElementById("tblAbilities").innerHTML = cardInfo.abilities;
 			}
 				});//end Ajax
 				
@@ -72,6 +41,7 @@ function() {
 				}
 				)
 </script>
+
 <script type=text/javascript>
 $(function()
 {
@@ -83,24 +53,14 @@ function() {
 			success:
 			function(cardInfo)
 			{
-				if ($("#cardPic").css("opacity") > 0)
-				{
-					$("#cardPic").fadeTo(1000, 0, function()
-					{
-					$("#cardPic").attr("src", cardInfo.graphic);	
-					}
-					);
-			}
-			$('#spanName').html(cardInfo.name);				
-				$("#spanFlavor").html(cardInfo.flavor);				
-				//this line is for testing purposes
-		//		$("#cardPic").attr("src", "http://upload.wikimedia.org/wikipedia/en/e/e5/Wheel_War_MTG_Card.png");							
-				$("#spanIllustrator").html(cardInfo.illustrator);				
-				$("#spanPower").html(cardInfo.power);
-				$("#spanType").html(cardInfo.type);				
-				$("#spanCost").html(cardInfo.cost);				
-				$("#spanAbilities").html(cardInfo.abilities);
-				$("#cardPic").fadeTo(3000, 1);
+				document.getElementById("tblName").innerHTML = cardInfo.name;
+				document.getElementById("tblFlavor").innerHTML = cardInfo.flavor;
+				document.getElementById("cardPic").src = cardInfo.graphic;
+				document.getElementById("tblIllustrator").innerHTML = cardInfo.illustrator;
+				document.getElementById("tblPower").innerHTML = cardInfo.power;
+				document.getElementById("tblType").innerHTML = cardInfo.type;
+				document.getElementById("tblCost").innerHTML = cardInfo.cost;
+				document.getElementById("tblAbilities").innerHTML = cardInfo.abilities;
 			}
 				});//end Ajax
 				
@@ -110,60 +70,54 @@ function() {
 				)
 </script>
 
+
 <body>
- <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">Engineering Project</a>
-        </div>
-      </div>
-    </div>
+<p>Enter a card name</p>
+<input type="text" id="cardName"></input>
+<br />
+    <button type='button' id='getCard' name='getCard'>Get Card</button>
+	<br/>
+	 <button type='button' id='getRandom' name='getRandom'>Get Random Card</button>
 	
-<div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Card Information</li>
-              <li class="info">Name:</li><span id="spanName"></span>
-			  <li class="info">Cost: </li><span id="spanCost"></span>
-			  <li class="info">Abilities: </li><span id="spanAbilities"></span>
-              <li class="info">Flavor: </li><span id="spanFlavor" style="Font-style: italic"></span>
-              <li class="info">Type: </li><span id="spanType"></span>            
-            </ul>			 
-          </div><!--/.well -->
-		  <div class="inputs"> 
-		  <h2>Get Card</h2>
-              <p>Enter a card name</p>
-			  <input maxlength="32" width="32" type="text" id="cardName" ></input>
-			  <br />
-              <button type='button' id='getCard' name='getCard'>Get Card &raquo;</button>
-			  <br />
-			  <br />
-			   <h2>Random Card</h2>
-              <p>This button gets a random card from the database.</p>
-			  <br />
-              <button type='button' id='getRandom' name='getRandom'>Get Random Card &raquo;</button>
-			  </div>
-        </div><!--/span-->
-        <div class="span9">
+<table style="border:10px solid #000000; padding:10px 30px; width: 400px; border-radius:25px">
+<tr>
+<td id="tblName">
+<p>
+</td>
+<td id="tblCost">
+</td>
+</tr>
+<tr>
+<td id="tblGraphic">
+<img src="" id="cardPic" ></img>
+</td>
+</tr>
+<tr>
+<td id="tblType">
+</td>
+</tr>
+<tr>
+<td>
+edition?
+</td>
+</tr>
+<tr>
+<td id="tblAbilities">
+</td>
+</tr>
+<tr>
+<td id="tblFlavor" style="font-style:italic">
+</td>
+</tr>
+<tr>
+<td id="tblPower">
 
-          <div class="hero-unit">
-            <h1>Card Preview</h1>
-			<br />
-            <img class="cardPic" id="cardPic" src="static/img/default.jpg"></img>
-			<br />
-			<br />
-            <button id="flipCard" class="btn btn-primary btn-large">Flip Card &raquo;</button>
-          </div>
-		</div>
-      </div><!--/row-->
-</div>
+</tr>
+</td>
+<tr>
+<td id="tblIllustrator">
+</td>
+</tr>
+	
 </body>
-
 </html>
