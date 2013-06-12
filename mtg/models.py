@@ -1,4 +1,6 @@
 from mtg import db
+from tools import clean_cost, clean_abilities
+from sqlalchemy import func
 from sqlalchemy.ext.declarative import declarative_base
 
 DeclarativeBase = declarative_base()
@@ -32,6 +34,22 @@ class Card(DeclarativeBase):
 
     #relation definitions
     editions = db.relation('Edition', primaryjoin='Card.edition_id==Edition.id')
+
+    def card_info(self):
+        max_editions = db.session.query(func.count(Card.edition_id)).filter(Card.name == self.name).first()
+        info = {
+            "name": self.name,
+            "graphic": self.image_url,
+            "flavor": self.flavor_text,
+            "illustrator": self.illustrator,
+            "edition_id": self.edition_id,
+            "max_editions": max_editions,
+            "power": self.power,
+            "type": self.type,
+            "cost": clean_cost(self.cost),
+            "abilities": clean_abilities(self.abilities)
+        }
+        return info
 
 
 class Edition(DeclarativeBase):

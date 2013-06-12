@@ -27,103 +27,147 @@
         }
       }
     </style>
-	
+    
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 </head>
-
+<script>
+currentEdition = 1
+</script>
 <script type=text/javascript>
 $(function()
 {
-$("#getCard").click(
-function() {
-		  $.ajax({
-            url: "/getCard/",
-			data: { pyCardName: $("#cardName").val()},
+    $("#getCard").click(
+            function() {
+            $.ajax({
+            url: "/get_card/",
+            data: { pyCardName: $("#cardName").val()},
             contentType: "application/json; charset=utf-8",
-			success:
-			function(cardInfo)
-			{
-				if ($("#cardPic").css("opacity") > 0)
-				{
-					$("#cardPic").fadeTo(1000, 0, function()
-					{
-					$("#cardPic").attr("src", cardInfo.graphic);	
-					}
-					);
-				}
-				$('#spanName').html(cardInfo.name);				
-					$("#spanFlavor").html(cardInfo.flavor);				
-					//this line is for testing purposes
-				//	$("#cardPic").attr("src", "http://upload.wikimedia.org/wikipedia/en/e/e5/Wheel_War_MTG_Card.png");							
-					$("#spanIllustrator").html(cardInfo.illustrator);				
-					$("#spanPower").html(cardInfo.power);
-					$("#spanType").html(cardInfo.type);				
-					$("#spanCost").html(cardInfo.cost);				
-					$("#spanAbilities").html(cardInfo.abilities);
-					$("#cardPic").fadeTo(3000, 1);
-				
-			}
-				});//end Ajax
-				
-				}//end function
-				);
-				}
-				)
+            success:
+            function(cardInfo)
+            {
+                if ($("#cardPic").css("opacity") > 0)
+                {
+                    $("#cardPic").fadeTo(1000, 0, function()
+                    {
+                    $("#cardPic").attr("src", cardInfo.graphic);	
+                    }
+                    );
+                }
+                $('#spanName').html(cardInfo.name);				
+                $("#spanFlavor").html(cardInfo.flavor);				
+                $("#spanIllustrator").html(cardInfo.illustrator);				
+                $("#spanPower").html(cardInfo.power);
+                $("#spanType").html(cardInfo.type);	
+                $("#spanEd").html(cardInfo.edition_id);	
+                $("#spanMaxEd").html(cardInfo.max_editions);		
+                $("#spanCost").html(cardInfo.cost);	
+                $("#spanAbilities").html(cardInfo.abilities);
+                currentEdition = 1;
+                $("#spanCurEd").html(currentEdition)
+                $("#cardPic").fadeTo(2000, 1);
+            }
+                });//end Ajax		
+                }//end function);
+        
+    );
+}
+)
+                
 </script>
 <script type=text/javascript>
 $(function()
 {
 $("#getRandom").click(
 function() {
-		  $.ajax({
-            url: "/getRandom/",
+          $.ajax({
+            url: "/get_random/",
             contentType: "application/json; charset=utf-8",
-			success:
-			function(cardInfo)
-			{
-				if ($("#cardPic").css("opacity") > 0)
-				{
-					$("#cardPic").fadeTo(1000, 0, function()
-					{
-					$("#cardPic").attr("src", cardInfo.graphic);	
-					}
-					);
-			}
-			$('#spanName').html(cardInfo.name);				
-				$("#spanFlavor").html(cardInfo.flavor);				
-				//this line is for testing purposes
-		//		$("#cardPic").attr("src", "http://upload.wikimedia.org/wikipedia/en/e/e5/Wheel_War_MTG_Card.png");							
-				$("#spanIllustrator").html(cardInfo.illustrator);				
-				$("#spanPower").html(cardInfo.power);
-				$("#spanType").html(cardInfo.type);				
-				$("#spanCost").html(cardInfo.cost);				
-				$("#spanAbilities").html(cardInfo.abilities);
-				$("#cardPic").fadeTo(3000, 1);
-			}
-				});//end Ajax
-				
-				}//end function
-				);
-				}
-				)
+            success:
+            function(cardInfo)
+            {
+                if ($("#cardPic").css("opacity") > 0)
+                {
+                    $("#cardPic").fadeTo(1000, 0, function()
+                    {
+                    $("#cardPic").attr("src", cardInfo.graphic);	
+                    }
+                    );
+            }		
+                $('#spanName').html(cardInfo.name);				
+                $("#spanFlavor").html(cardInfo.flavor);				
+                $("#spanIllustrator").html(cardInfo.illustrator);				
+                $("#spanPower").html(cardInfo.power);
+                $("#spanType").html(cardInfo.type);	
+                $("#spanEd").html(cardInfo.edition_id);	
+                $("#spanMaxEd").html(cardInfo.max_editions);		
+                $("#spanCost").html(cardInfo.cost);	
+                $("#spanAbilities").html(cardInfo.abilities)
+                currentEdition = 1;
+				$("#spanCurEd").html(currentEdition)
+                $("#cardPic").fadeTo(2000, 1);
+            }
+                });//end Ajax
+                
+                }//end function
+                );
+                }
+                )
 </script>
+
+<script type=text/javascript>
+$(function()
+{
+$("#cycleEditions").click(
+function() {
+          $.ajax({			
+            url: "/cycle_editions/",
+            data: { pyEdition: $("#spanEd").html(), pyName: $("#spanName").html()},
+            contentType: "application/json; charset=utf-8",
+            success:
+            function(cardInfo)
+            {
+                currentEdition += 1;
+                $("#spanEd").html(cardInfo.edition_id);	
+                 if (parseInt($("#spanCurEd").html()) >=(parseInt($("#spanMaxEd").html())))
+                {
+                    currentEdition = 1;
+                }
+
+                if ($("#cardPic").css("opacity") > 0)
+                {
+                    $("#cardPic").fadeTo(500, 0, function()
+                    {	
+                    $("#cardPic").attr("src",cardInfo.graphic);
+                    }
+                    );
+            }
+                $("#cardPic").fadeTo(1000, 1);
+                $("#spanCurEd").html(currentEdition);	
+            }
+                });//end Ajax
+                
+                }//end function
+                );
+                }
+                )
+</script>
+
+<input type="hidden" id="hidEdStr"></input>
+<input type="hidden" id="hidEdStrOrig"></input>
 
 <body>
  <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
           </button>
           <a class="brand" href="#">Engineering Project</a>
         </div>
       </div>
     </div>
-	
+    
 <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
@@ -131,39 +175,44 @@ function() {
             <ul class="nav nav-list">
               <li class="nav-header">Card Information</li>
               <li class="info">Name:</li><span id="spanName"></span>
-			  <li class="info">Cost: </li><span id="spanCost"></span>
-			  <li class="info">Abilities: </li><span id="spanAbilities"></span>
+              <li class="info">Cost: </li><span id="spanCost"></span>
+              <li class="info">Abilities: </li><span id="spanAbilities"></span>
               <li class="info">Flavor: </li><span id="spanFlavor" style="Font-style: italic"></span>
               <li class="info">Type: </li><span id="spanType"></span>            
-            </ul>			 
+            </ul>		 
           </div><!--/.well -->
-		  <div class="inputs"> 
-		  <h2>Get Card</h2>
+          <div class="inputs"> 
+          <h2>Get Card</h2>
               <p>Enter a card name</p>
-			  <input maxlength="32" width="32" type="text" id="cardName" ></input>
-			  <br />
+              <input maxlength="32" width="32" type="text" id="cardName" ></input>
+              <br />	 
               <button type='button' id='getCard' name='getCard'>Get Card &raquo;</button>
-			  <br />
-			  <br />
-			   <h2>Random Card</h2>
+              <br />
+              <br />
+               <h2>Random Card</h2>
               <p>This button gets a random card from the database.</p>
-			  <br />
+              <br />
               <button type='button' id='getRandom' name='getRandom'>Get Random Card &raquo;</button>
-			  </div>
+              </div>
         </div><!--/span-->
         <div class="span9">
 
           <div class="hero-unit">
             <h1>Card Preview</h1>
-			<br />
+            <br />
+            <br />
             <img class="cardPic" id="cardPic" src="static/img/default.jpg"></img>
-			<br />
-			<br />
-            <button id="flipCard" class="btn btn-primary btn-large">Flip Card &raquo;</button>
+            <ul class="nav nav-list">
+              <li class="nav-header">Edition Information</li>
+              <li class="info">Edition: <span id="spanEd"></span> </li>
+              <li class="info">Showing <span id="spanCurEd">1</span> of <span id="spanMaxEd">1</span></li>    
+            </ul>			 	
+            <button id="cycleEditions" class="btn btn-primary btn-large">Cycle Editions &raquo;</button>
           </div>
-		</div>
+        </div>
       </div><!--/row-->
 </div>
 </body>
 
 </html>
+          
