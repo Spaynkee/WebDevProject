@@ -331,7 +331,7 @@ a:focus {
 .span3 {
 position: relative;
   width: 220px;
-  height: 750px;
+  height: 700px;
 }
 
 .span2 {
@@ -6165,28 +6165,4 @@ a.badge:focus {
 
 .affix {
   position: fixed;
-}
-
-/*  These are my classes*/
-.cardPic
-{
-height: 445px;
-}
-
-.inputs
-{
-position: absolute;
-bottom: 0px;
-vertical-align: bottom;
-}
-
-.info
-{
-font-weight: bold;
-}
-
-.symbol
-{
-width: 15px;
-height: 15px;
 }

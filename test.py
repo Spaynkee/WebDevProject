@@ -3,19 +3,20 @@ import mtg
 import unittest
 import tempfile
 import json
+import requests
 
 class mtgTestCase(unittest.TestCase):
     def setUp(self):
         mtg.app.config['TESTING'] = True
         self.app = mtg.app.test_client()
         
-    def testGetCard(self):
-        rv = self.app.get('/getCard')
+    def test_get_card(self):
         data = {'name': 'Llanowar Elves'}
-        json_data = json.dumps(data)
-        response = self.app.post('/getCard', data)
-		print json_data
-        assert json_data in rv.data
+#schema is http:
+        r = self.app.get('/search_cards/', "contedata))
+   #     r = requests.get(self)
+        print r.text
+       # assert "" in response.data
     
 if __name__ == '__main__':
     unittest.main()

@@ -44,7 +44,6 @@ class Card(DeclarativeBase):
             "illustrator": self.illustrator,
             "edition_id": self.edition_id,
             "max_editions": max_editions,
-            "power": self.power,
             "type": self.type,
             "cost": clean_cost(self.cost),
             "abilities": clean_abilities(self.abilities)

@@ -22,7 +22,6 @@ def clean_abilities(abils):
             ability = ability.replace("{G}", "<img class='symbol' src='/static/img/Green.png'></img>")
             ability = ability.replace("{B}", "<img class='symbol' src='/static/img/Black.png'></img>")
             ability = ability.replace("{U}", "<img class='symbol' src='/static/img/Blue.png'></img>")
-            ability = ability.replace("X", '<span class="badge" style="padding: 4px; padding-top: 1px; padding-bottom: 1px;">X</span>')
             for i in range(0, 9):
                 ability = ability.replace("{%s}" % str(i), "<span class='badge' style='padding: 4px; padding-top: 1px; padding-bottom: 1px;'>%s</span>" % str(i))
 
@@ -37,13 +36,13 @@ def clean_cost(cost):
         cost_string = cost_string.replace("G", "<img class='symbol' src='/static/img/Green.png'></img>")
         cost_string = cost_string.replace("B", "<img class='symbol' src='/static/img/Black.png'></img>")
         cost_string = cost_string.replace("U", "<img class='symbol' src='/static/img/Blue.png'></img>")
-        cost_string = cost_string.replace("X", '<span class="badge" style="padding: 4px; padding-top: 1px; padding-bottom: 1px;">X</span>')
+        cost_string = cost_string.replace("X", '<span class="badge">X</span>')
         
         for i in range(0, 9):
             if not cost_string.find(str(i)):               
                 cost_string = cost_string.replace("%s" % str(i), "{%s}" % str(i))
                 
         for i in range(0, 9):
-            cost_string = cost_string.replace("{%s}" % str(i), '<span class="badge" style="padding: 4px; padding-top: 1px; padding-bottom: 1px;">%s</span>' % str(i))
+            cost_string = cost_string.replace("{%s}" % str(i), '<span class="badge">%s</span>' % str(i))
 
         return cost_string

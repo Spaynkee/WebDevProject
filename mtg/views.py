@@ -14,12 +14,27 @@ def index():
     # You will need to serve something up here.
     return render_template('index.html')
 
+@app.route('/search_cards/')
+def search_cards():
+    data = {"name": request.args.get('pyCardName')}
+    card_string = ""
+    card = db.session.query(Card).filter((Card.name).ilike("%" + data['name'] + "%")).all()
+
+    for i in range(len(card)):
+        if card[i].name not in card_string:
+            card_string += card[i].name + "~"
+
+    return card_string
+
 @app.route('/get_card/')
 def get_card():
     data = {"name": request.args.get('pyCardName')}
-    card = db.session.query(Card).filter(func.lower(Card.name) == func.lower(data['name'])).first()
-
-    return jsonify(card.card_info())
+    card = db.session.query(Card).filter(func.lower(Card.name).ilike(func.lower("%" + data['name'] + "%"))).first()
+    try:
+        return jsonify(card.card_info())
+    except AttributeError:
+        return ""
+        
 
 @app.route('/get_random/')
 def get_random():
@@ -36,7 +51,7 @@ def cycle_editions():
     data = {"edition": request.args.get('pyEdition'),		
 			"name": request.args.get('pyName')}
 
-    card = db.session.query(Card).filter(func.lower(Card.name) == func.lower(data['name'])).filter(Card.edition_id > data['edition']).first()
+    card = db.session.query(Card).filter(Card.name == data['name']).filter(Card.edition_id > data['edition']).first()
     if card:
         return jsonify(card.card_info())
     else:
